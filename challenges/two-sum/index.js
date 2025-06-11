@@ -1,13 +1,11 @@
 function twoSum(nums, target) {
-    // Write your code here
     let indexes = []
     for(let i=0; i < nums.length; i++) {
-      let right = nums[i] + nums[i + 1]
-      if(right === target) {
+      let expectedInedexes = nums[i] + nums[i + 1]
+      if(expectedInedexes === target) {
         indexes = [i, i + 1]
       }
     }
-    console.log("test");
     return indexes;
 }
 
