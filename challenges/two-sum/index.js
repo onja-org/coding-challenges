@@ -1,23 +1,14 @@
-function twoSum(ns, n) {
-  const m = new Map();
-  // [7,3,2] 9
-  for (let i = 0; i < ns.length; i++) {
-    const c = n - ns[i];
-    // 1 9 - 7 = 2
-    // 2 9 - 3 = 6
-    // 3 9 - 2 = 7
+function twoSum(nums, target) {
+  // Write your code here
+  console.log("test");
 
-    // Third will be true because m contains 7
-    if (m.has(c)) {
-      // if true get from m the value of key c
-      // return value of key c and current index of the loop
-      return [m.get(c), i];
+  for (let currentIndex = 0; currentIndex < nums.length; currentIndex++) {
+    for (let nextIndex = currentIndex + 1; nextIndex < nums.length; nextIndex++) {
+      if (target === nums[currentIndex] + nums[nextIndex]) {
+        return [currentIndex, nextIndex]
+      }
     }
-    // 1 set map(7, 0)
-    // 2 set map (3, 1)
-    m.set(ns[i], i);
   }
-  return [];
 }
 
 function runTests() {
