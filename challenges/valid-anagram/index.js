@@ -1,6 +1,16 @@
 function isAnagram(s, t) {
       // Write your code here
       console.log("test");
+
+      // Need to sort the values, 
+      // if they match then they are anagram
+
+      const sortedStrings = (word) => {
+        const splittedWord = word.toLowerCase().split("");
+        return splittedWord.sort().join("")
+      }
+
+      return sortedStrings(s) == sortedStrings(t)
 }
 
 function runAnagramTests() {
