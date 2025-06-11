@@ -3,11 +3,12 @@ function twoSum(nums, target) {
   console.log("test");
 
   for (let currentIndex = 0; currentIndex < nums.length; currentIndex++) {
-    for (let nextIndex = currentIndex + 1; nextIndex < nums.length; nextIndex++) {
-      if (target === nums[currentIndex] + nums[nextIndex]) {
-        return [currentIndex, nextIndex]
-      }
+    let nextIndex = currentIndex + 1;
+
+    if (target === nums[currentIndex] + nums[nextIndex]) {
+      return [currentIndex, nextIndex]
     }
+
   }
 }
 
@@ -42,4 +43,4 @@ function runTests() {
   });
 }
 
-//   runTests();
+runTests();
