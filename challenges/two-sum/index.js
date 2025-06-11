@@ -1,6 +1,16 @@
+
 function twoSum(nums, target) {
     // Write your code here
-    console.log("test");
+    const arr = [];
+    for (let i = 0; i < nums.length; i++) {
+        const num = nums[i];
+        const diff = target - num;
+        
+        if (arr.includes(diff)) {
+            return [arr.indexOf(diff), i];
+        } 
+        arr.push(num);
+    }
 }
 
  function runTests() {
