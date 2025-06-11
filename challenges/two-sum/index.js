@@ -1,6 +1,13 @@
 function twoSum(nums, target) {
     // Write your code here
-    console.log("test");
+    console.log(nums, target);
+    let sum = 0;
+    let sumArr = [];
+    for (let i = 0; i < nums.length; i++) {
+      sum += nums[i];
+      sumArr.push(sum)
+      console.log(sumArr)
+    }
 }
 
  function runTests() {
