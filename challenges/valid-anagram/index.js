@@ -1,7 +1,28 @@
-function isAnagram(s, t) {
-      // Write your code here
-      console.log("test");
+function isAnagram(s1, s2) {
+    if (s1.length !== s2.length) {
+        return false;
+    }
+
+    const m = new Map();
+
+    for (let char of s1) {
+        m.set(char, (m.get(char) || 0) + 1);
+    }
+
+    for (let char of s2) {
+        if (!m.has(char)) {
+            return false;
+        }
+        m.set(char, m.get(char) - 1);
+        if (m.get(char) === 0) {
+            m.delete(char);
+        }
+    }
+
+    return true;
 }
+
+console.log(isAnagram("listenu\n2665", "silent\nu2665")); // true
 
 function runAnagramTests() {
     const testCases = [
