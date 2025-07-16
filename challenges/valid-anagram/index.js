@@ -1,6 +1,14 @@
 function isAnagram(s, t) {
-      // Write your code here
-      console.log("test");
+      const charCount = {};
+    if (s.length !== t.length) return false;
+
+    for (let char of s) {
+        charCount[char] = (charCount[char] || 0) + 1;
+    } 
+    for (let char of t) {
+        if (!charCount[char]) return false;
+    }
+    return true;
 }
 
 function runAnagramTests() {
