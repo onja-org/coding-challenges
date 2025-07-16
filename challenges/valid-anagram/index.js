@@ -1,6 +1,12 @@
 function isAnagram(s, t) {
-      // Write your code here
-      console.log("test");
+    let ss = s.split("").sort();
+    let tt = t.split("").sort();
+
+    if (ss.length === tt.length && JSON.stringify(ss) === JSON.stringify(tt)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function runAnagramTests() {
