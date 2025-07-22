@@ -1,6 +1,24 @@
 function isAnagram(s, t) {
       // Write your code here
-      console.log("test");
+    if (s.length !== t.length) {
+        return false;
+    }
+
+    let sSize = [];
+    let tSize = [];
+
+    for (let i = 0; i < s.length; i++) {
+        sSize[s[i]] = (sSize[s[i]] || 0) + 1;
+        tSize[t[i]] = (tSize[t[i]] || 0) + 1;
+    }
+
+    for (let char in sSize) {
+        if (sSize[char] !== tSize[char]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function runAnagramTests() {

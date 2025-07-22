@@ -1,5 +1,12 @@
 function twoSum(nums, target) {
     // Write your code here
+    for (let i = 0; i < nums.length; i++) {
+      for (let j = i + 1; j < nums.length; j++) {
+        if (nums[i] + nums[j] === target) {
+          return [i, j];
+        }
+      }
+    }
     console.log("test");
 }
 
@@ -19,6 +26,11 @@ function twoSum(nums, target) {
         nums: [3, 3],
         target: 6,
         expected: [0, 1]
+      },
+      {
+        nums: [2, 5, 5, 11],
+        target: 12,
+        expected: []
       }
     ];
 
