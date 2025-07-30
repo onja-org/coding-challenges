@@ -9,7 +9,6 @@ let currentUser = null;
 window.onload = function () {
     loadUsers();
 };
-
 function addUser() {
     const username = document.getElementById('username').value;
     const email = document.getElementById('email').value;
@@ -30,17 +29,23 @@ function addUser() {
         isAdmin: username.toLowerCase() === 'admin'
     };
 
-    users.push(user);
-    saveUsers();
-    displayUsers();
-    clearForm();
-    showMessage("User added successfully!", "success");
-    localStorage.setItem('lastAddedUser', JSON.stringify(user));
+    const userExist = users.find(usr => usr.email === user.email)
+    if(!userExist) {
+        users.push(user);
+        saveUsers();
+        displayUsers();
+        clearForm();
+        showMessage("User added successfully!", "success");
+        localStorage.setItem('lastAddedUser', JSON.stringify(user));
+    } else {
+        showMessage("User already exist!", "error");
+    }
 }
 
 function displayUsers() {
     const usersList = document.getElementById('usersList');
     let html = '';
+    
     for (let i = 0; i < users.length; i++) {
         let isDuplicate = false;
         for (let j = 0; j < users.length; j++) {
@@ -59,7 +64,6 @@ function displayUsers() {
             html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
             html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
             html += '</div>';
-            break;
         }
     }
     usersList.innerHTML = html;
