@@ -12,17 +12,17 @@
         
         <div class="form-group">
             <label for="username">Username:</label>
-            <input required type="text" id="username" placeholder="Enter username">
+            <input type="text" id="username" placeholder="Enter username">
         </div>
         
         <div class="form-group">
             <label for="email">Email:</label>
-            <input required type="email" id="email" placeholder="Enter email">
+            <input type="email" id="email" placeholder="Enter email">
         </div>
         
         <div class="form-group">
             <label for="password">Password:</label>
-            <input required type="password" id="password" placeholder="Enter password">
+            <input type="password" id="password" placeholder="Enter password">
         </div>
         
         <div class="form-group">
@@ -30,9 +30,9 @@
             <textarea id="bio" rows="3" placeholder="Tell us about yourself"></textarea>
         </div>
         
-        <button id="add-user">Add User</button>
-        <button id="export-data">Export Data</button>
-        <button id="import-data">Import Data</button>
+        <button onclick="addUser()">Add User</button>
+        <button onclick="exportUsers()">Export Data</button>
+        <button onclick="importUsers()">Import Data</button>
         
         <div id="message"></div>
         
