@@ -1,6 +1,9 @@
 function isAnagram(s, t) {
       // Write your code here
-      console.log("test");
+    const arrOfS = s.split("").sort();
+    const arrOfT = t.split("").sort();
+
+    return arrOfS.join("") === arrOfT.join("") ? true : false;
 }
 
 function runAnagramTests() {
