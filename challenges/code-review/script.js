@@ -1,10 +1,18 @@
 // Review code
 // List existing issues
+// There are some unused variable
+// Using break stops the loop
+// Password is exposed in the local storage
+// Heading element in the "Users(n)" is not following the right order
+// let currentUser = null;
+
+
 // Fix issues
 
 const savedUsers = localStorage.getItem('userData') || '[]';
 let users = JSON.parse(savedUsers);
-let currentUser = null;
+
+
 
 window.onload = function () {
     loadUsers();
@@ -43,7 +51,7 @@ function displayUsers() {
     let html = '';
     for (let i = 0; i < users.length; i++) {
         let isDuplicate = false;
-        for (let j = 0; j < users.length; j++) {
+        for (let j = i; j < users.length; j++) {
             if (i !== j && users[i].email === users[j].email) {
                 isDuplicate = true;
                 break;
@@ -53,13 +61,12 @@ function displayUsers() {
         if (!isDuplicate) {
             const user = users[i];
             html += '<div class="user-card">';
-            html += '<h4>' + user.username + '</h4>';
+            html += '<h3>' + user.username + '</h3>';
             html += '<p>Email: ' + user.email + '</p>';
             html += '<p>Bio: ' + user.bio + '</p>';
             html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
             html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
             html += '</div>';
-            break;
         }
     }
     usersList.innerHTML = html;
