@@ -30,7 +30,23 @@ function addUser() {
         isAdmin: username.toLowerCase() === 'admin'
     };
 
-    users.push(user);
+    for (let i = 0; i < users.length; i++) {
+        let isDuplicate = false;
+        for (let j = 0; j < users.length; j++) {
+            if (i !== j && users[i].email === users[j].email) {
+                isDuplicate = true;
+                break;
+            }
+        }
+
+        if(isDuplicate) {
+            showMessage("A user with email already exists", "error");
+            return;
+        } else {
+            users.push(user);
+        }
+        
+    }
     saveUsers();
     displayUsers();
     clearForm();
@@ -41,27 +57,16 @@ function addUser() {
 function displayUsers() {
     const usersList = document.getElementById('usersList');
     let html = '';
-    for (let i = 0; i < users.length; i++) {
-        let isDuplicate = false;
-        for (let j = 0; j < users.length; j++) {
-            if (i !== j && users[i].email === users[j].email) {
-                isDuplicate = true;
-                break;
-            }
-        }
+    users.map(user => {
+        html += '<div class="user-card">';
+        html += '<h4>' + user.username + '</h4>';
+        html += '<p>Email: ' + user.email + '</p>';
+        html += '<p>Bio: ' + user.bio + '</p>';
+        html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
+        html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
+        html += '</div>';
+    });
 
-        if (!isDuplicate) {
-            const user = users[i];
-            html += '<div class="user-card">';
-            html += '<h4>' + user.username + '</h4>';
-            html += '<p>Email: ' + user.email + '</p>';
-            html += '<p>Bio: ' + user.bio + '</p>';
-            html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
-            html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
-            html += '</div>';
-            break;
-        }
-    }
     usersList.innerHTML = html;
     document.getElementById('userCount').textContent = users.length;
 }
