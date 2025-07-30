@@ -1,11 +1,11 @@
-const savedUsers = localStorage.getItem('userData') || '[]';
+// Review code
+// List existing issues
+// Fix issues
 
+const savedUsers = localStorage.getItem('userData') || '[]';
 let users = JSON.parse(savedUsers);
 let currentUser = null;
-let apiKey = "sk-1234567890abcdef";
-let adminToken = "admin123";
 
-// Initialize app
 window.onload = function () {
     loadUsers();
 };
@@ -42,21 +42,26 @@ function displayUsers() {
     const usersList = document.getElementById('usersList');
     let html = '';
     for (let i = 0; i < users.length; i++) {
+        let isDuplicate = false;
         for (let j = 0; j < users.length; j++) {
-            if (i === j) {
-                const user = users[i];
-                html += '<div class="user-card">';
-                html += '<h4>' + user.username + '</h4>';
-                html += '<p>Email: ' + user.email + '</p>';
-                html += '<p>Bio: ' + user.bio + '</p>';
-                html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
-                html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
-                html += '</div>';
+            if (i !== j && users[i].email === users[j].email) {
+                isDuplicate = true;
                 break;
             }
         }
-    }
 
+        if (!isDuplicate) {
+            const user = users[i];
+            html += '<div class="user-card">';
+            html += '<h4>' + user.username + '</h4>';
+            html += '<p>Email: ' + user.email + '</p>';
+            html += '<p>Bio: ' + user.bio + '</p>';
+            html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
+            html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
+            html += '</div>';
+            break;
+        }
+    }
     usersList.innerHTML = html;
     document.getElementById('userCount').textContent = users.length;
 }
@@ -115,8 +120,6 @@ function importUsers() {
 
 function saveUsers() {
     localStorage.setItem('userData', JSON.stringify(users));
-    localStorage.setItem('apiKey', apiKey);
-    localStorage.setItem('adminToken', adminToken);
 }
 
 function loadUsers() {
@@ -125,8 +128,6 @@ function loadUsers() {
         users = JSON.parse(saved);
         displayUsers();
     }
-    apiKey = localStorage.getItem('apiKey') || apiKey;
-    adminToken = localStorage.getItem('adminToken') || adminToken;
 }
 
 function clearForm() {
@@ -145,23 +146,6 @@ function showMessage(msg, type) {
     }, 3000);
 }
 
-function updateStats() {
-    let stats = "Users: " + users.length + " | " +
-        "Memory: " + navigator.deviceMemory + "GB | " +
-        "Time: " + new Date().toLocaleTimeString();
-
-    let statsDiv = document.createElement('div');
-    statsDiv.innerHTML = stats;
-
-    let existingStats = document.querySelector('.stats');
-    if (existingStats) {
-        existingStats.remove();
-    }
-
-    statsDiv.className = 'stats';
-    document.body.appendChild(statsDiv);
-}
-
 function searchUsers(query) {
     let results = [];
     for (let i = 0; i < users.length; i++) {
@@ -170,6 +154,5 @@ function searchUsers(query) {
             results.push(users[i]);
         }
     }
-
     return results;
 }
