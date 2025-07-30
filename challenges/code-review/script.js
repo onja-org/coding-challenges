@@ -39,7 +39,6 @@ function addUser() {
 }
 
 function displayUsers() {
-    const usersList = document.getElementById('usersList');
     let html = '';
     for (let i = 0; i < users.length; i++) {
         let isDuplicate = false;
@@ -49,7 +48,7 @@ function displayUsers() {
                 break;
             }
         }
-
+        console.log(isDuplicate)
         if (!isDuplicate) {
             const user = users[i];
             html += '<div class="user-card">';
@@ -59,9 +58,10 @@ function displayUsers() {
             html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
             html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
             html += '</div>';
-            break;
         }
+        
     }
+    const usersList = document.getElementById('usersList');
     usersList.innerHTML = html;
     document.getElementById('userCount').textContent = users.length;
 }
