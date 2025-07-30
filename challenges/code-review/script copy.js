@@ -2,10 +2,6 @@
 // List existing issues
 // Fix issues
 
-const addUserBtn = document.getElementById('add-user');
-const exportDataBtn = document.getElementById('export-data');
-const importDataBtn = document.getElementById('import-data');
-
 const savedUsers = localStorage.getItem('userData') || '[]';
 let users = JSON.parse(savedUsers);
 let currentUser = null;
@@ -13,11 +9,6 @@ let currentUser = null;
 window.onload = function () {
     loadUsers();
 };
-
-function isValidEmail(email) {
-    const simpleRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return typeof email === 'string' && simpleRegex.test(email); 
-}
 
 function addUser() {
     const username = document.getElementById('username').value;
@@ -29,39 +20,19 @@ function addUser() {
         return;
     }
 
-    if (!email || !isValidEmail(email)) {
-        return showMessage("Invalid email", "error");
-    }
-
-    if (users.some(user => user.username === username)) {
-        showMessage("Username already exists", "error");
-        return;
-    }
-
-    if (users.some(user => user.email === email)) {
-        showMessage("Email already exists", "error");
-        return;
-    }
-
-    if (password.length < 6) {
-        showMessage("Password too short", "error");
-        return;
-    }
-
     const user = {
-        id: Date.now(), // I would suggest using something more robust for IDs
+        id: Date.now(),
         username: username,
         email: email,
         password: password,
         bio: bio,
-        created: new Date().toISOString(), // maybe something like created at is more descriptive
-        isAdmin: username.toLowerCase() === 'admin' // Maybe we don't want this hardcoded check
+        created: new Date().toISOString(),
+        isAdmin: username.toLowerCase() === 'admin'
     };
 
     users.push(user);
     saveUsers();
     displayUsers();
-    // Think again how to clear form because we are querying elements twice
     clearForm();
     showMessage("User added successfully!", "success");
     localStorage.setItem('lastAddedUser', JSON.stringify(user));
@@ -71,14 +42,25 @@ function displayUsers() {
     const usersList = document.getElementById('usersList');
     let html = '';
     for (let i = 0; i < users.length; i++) {
-        const user = users[i];
-        html += '<div class="user-card">';
-        html += '<h4>' + user.username + '</h4>';
-        html += '<p>Email: ' + user.email + '</p>';
-        html += '<p>Bio: ' + user.bio + '</p>';
-        html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
-        html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
-        html += '</div>';
+        let isDuplicate = false;
+        for (let j = 0; j < users.length; j++) {
+            if (i !== j && users[i].email === users[j].email) {
+                isDuplicate = true;
+                break;
+            }
+        }
+
+        if (!isDuplicate) {
+            const user = users[i];
+            html += '<div class="user-card">';
+            html += '<h4>' + user.username + '</h4>';
+            html += '<p>Email: ' + user.email + '</p>';
+            html += '<p>Bio: ' + user.bio + '</p>';
+            html += '<p>Admin: ' + (user.isAdmin ? 'Yes' : 'No') + '</p>';
+            html += '<button onclick="deleteUser(' + user.id + ')">Delete</button>';
+            html += '</div>';
+            break;
+        }
     }
     usersList.innerHTML = html;
     document.getElementById('userCount').textContent = users.length;
@@ -164,14 +146,13 @@ function showMessage(msg, type) {
     }, 3000);
 }
 
-addUserBtn.addEventListener('click', function () {
-    addUser()
-})
-
-exportDataBtn.addEventListener('click', function () {
-    exportUsers()
-})
-
-importDataBtn.addEventListener('click', function() {
-    importUsers()
-})
+function searchUsers(query) {
+    let results = [];
+    for (let i = 0; i < users.length; i++) {
+        let userStr = JSON.stringify(users[i]).toLowerCase();
+        if (userStr.indexOf(query.toLowerCase()) !== -1) {
+            results.push(users[i]);
+        }
+    }
+    return results;
+}
